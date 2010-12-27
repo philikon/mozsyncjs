@@ -111,6 +111,60 @@ require(["resource-xhr"], function (resource) {
       equals(result.toString(), "Ford Model T");
       equals(result.status, 200);
       equals(result.success, true);
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("PUT string", function (next) {
+    var res = new resource.Resource("http://localhost:8080/resource");
+    res.put("Austin Seven", function (error, result) {
+      equals(result.toString(), "12 bytes received");
+      equals(result.status, 200);
+      equals(serverResource.data, "Austin Seven");
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("PUT object", function (next) {
+    var res = new resource.Resource("http://localhost:8080/resource");
+    res.put({cylinders: 6}, function (error, result) {
+      equals(result.toString(), "15 bytes received");
+      equals(result.status, 200);
+      equals(serverResource.data, '{"cylinders":6}');
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("POST string", function (next) {
+    var res = new resource.Resource("http://localhost:8080/resource");
+    res.post("BMW 507", function (error, result) {
+      equals(result.toString(), "7 bytes received");
+      equals(result.status, 200);
+      equals(serverResource.data, "BMW 507");
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("POST object", function (next) {
+    var res = new resource.Resource("http://localhost:8080/resource");
+    res.post({cylinders: 12}, function (error, result) {
+      equals(result.toString(), "16 bytes received");
+      equals(result.status, 200);
+      equals(serverResource.data, '{"cylinders":12}');
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("POST object", function (next) {
+    serverResource.data = "Mercedes 300 SL";
+    var res = new resource.Resource("http://localhost:8080/resource");
+    res.del(function (error, result) {
+      equals(serverResource.data, "");
       next();
     });
   });
