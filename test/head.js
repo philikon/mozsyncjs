@@ -19,46 +19,70 @@ require.attach = function (url, contextName, moduleName, callback, type) {
   require.s.contexts[contextName].completeLoad(moduleName);
 };
 
-var tests = [],
-    total = 0,
-    failed = 0,
-    results = [];
+var _tests = [],
+    _results = [],
+    _current = null,
+    _total = 0,
+    _failed = 0,
+    _quit = false;
 
-function test(name, deps, callback) {
-  tests.push([name, deps, callback]);
+function test(name, callback) {
+  _tests.push([name, callback]);
+}
+
+function setTestStatus(status, error) {
+  if (status === "FAIL") {
+    _failed += 1;
+  }
+  _results.push([_current[0], status, error]);
+  print(_current[0] + "\t" + (error ? status + " " + error : status));
 }
 
 function runTests() {
-  if (!tests.length) {
-    print("Ran " + total + " tests. " + (total - failed) + " passed, "
-          + failed + " failed.");
+  if (!_tests.length) {
+    print("Ran " + _total + " tests. " + (_total - _failed) + " passed, "
+          + _failed + " failed.");
+    _quit = true;
     return;
   }
-  var testCase = tests.shift();
-  require(testCase[1], function () {
-    var status = "PASS";
-    var error = null;
-    try {
-      testCase[2].apply(this, arguments);
-    } catch(ex) {
-      error = ex;
-      status = "FAIL";
-      failed += 1;
-    }
-    total += 1;
-    results.push([testCase[0], status, error]);
-    print(testCase[0] + "\t" + (error ? status + " " + error : status));
+  _current = _tests.shift();
+  _total += 1;
+  try {
+    _current[1](function () {
+      setTestStatus("PASS", null);
+      runTests();
+    });
+  } catch(ex) {
+    setTestStatus("FAIL", ex);
     runTests();
-  });
+  }
+  _main();
+}
+
+// Keep test runner alive until last test has run
+function _main() {
+  var thread = Components.classes["@mozilla.org/thread-manager;1"]
+                         .getService().currentThread;
+
+  while (!_quit)
+    thread.processNextEvent(true);
+
+  while (thread.hasPendingEvents())
+    thread.processNextEvent(true);
 }
 
 function assert(bool, message) {
   message = message || "Assertion failed!";
   if (!bool) {
-    throw message;
+    try {
+      setTestStatus("FAIL", message);
+      throw message;
+    } finally {
+      runTests();
+    }
   }
 }
 
 function equals(actual, expected, message) {
-  assert(actual == expected, message);
+  assert(actual === expected, message || (actual + " != " + expected));
 }
