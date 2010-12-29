@@ -1,0 +1,8 @@
+obj Service
+  @sync
+  setCredentials(account string, password string, syncKey string)
+  startSync()
+
+Engine(name String, local Store)
+  startSync()
+
