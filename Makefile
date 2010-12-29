@@ -1,4 +1,5 @@
 
+.PHONY: runtests
 runtests:
 	cd lib && $(MOZ_OBJDIR)/dist/bin/xpcshell \
 	-f require.js \
