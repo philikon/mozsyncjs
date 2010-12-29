@@ -80,13 +80,13 @@ function XMLHttpRequest() {
 require(["resource-xhr"], function (resource) {
 
   test("URI property", function (next) {
-    var res = new resource.Resource("http://planetexpress.com/");
+    var res = resource.Resource("http://planetexpress.com/");
     equals(res.uri, "http://planetexpress.com/");
     next();
   });
 
   test("Network error", function (next) {
-    var res = new resource.Resource("http://localhost:12345/closed-port");
+    var res = resource.Resource("http://localhost:12345/closed-port");
     res.get(function (error, result) {
       equals(error, "ERROR");
       next();
@@ -94,7 +94,7 @@ require(["resource-xhr"], function (resource) {
   });
 
   test("GET 404", function (next) {
-    var res = new resource.Resource("http://localhost:8080/non-existent");
+    var res = resource.Resource("http://localhost:8080/non-existent");
     res.get(function (error, result) {
       equals(error, null);
       equals(result.status, 404);
@@ -105,7 +105,7 @@ require(["resource-xhr"], function (resource) {
 
   test("GET 200", function (next) {
     serverResource.data = "Ford Model T";
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.get(function (error, result) {
       equals(error, null);
       equals(result.toString(), "Ford Model T");
@@ -117,7 +117,7 @@ require(["resource-xhr"], function (resource) {
   });
 
   test("PUT string", function (next) {
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.put("Austin Seven", function (error, result) {
       equals(result.toString(), "12 bytes received");
       equals(result.status, 200);
@@ -128,7 +128,7 @@ require(["resource-xhr"], function (resource) {
   });
 
   test("PUT object", function (next) {
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.put({cylinders: 6}, function (error, result) {
       equals(result.toString(), "15 bytes received");
       equals(result.status, 200);
@@ -139,7 +139,7 @@ require(["resource-xhr"], function (resource) {
   });
 
   test("POST string", function (next) {
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.post("BMW 507", function (error, result) {
       equals(result.toString(), "7 bytes received");
       equals(result.status, 200);
@@ -150,7 +150,7 @@ require(["resource-xhr"], function (resource) {
   });
 
   test("POST object", function (next) {
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.post({cylinders: 12}, function (error, result) {
       equals(result.toString(), "16 bytes received");
       equals(result.status, 200);
@@ -162,7 +162,7 @@ require(["resource-xhr"], function (resource) {
 
   test("POST object", function (next) {
     serverResource.data = "Mercedes 300 SL";
-    var res = new resource.Resource("http://localhost:8080/resource");
+    var res = resource.Resource("http://localhost:8080/resource");
     res.del(function (error, result) {
       equals(serverResource.data, "");
       next();
