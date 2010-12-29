@@ -80,7 +80,7 @@ function XMLHttpRequest() {
            .createInstance(Ci.nsIXMLHttpRequest);
 }
 
-require(["resource-xhr"], function (resource) {
+require(["web-resource"], function (resource) {
 
   test("URI property", function (next) {
     var res = resource.Resource("http://planetexpress.com/");

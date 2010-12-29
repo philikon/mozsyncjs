@@ -18,7 +18,7 @@ function test_hmac(testvectors, hmacfunc) {
   }
 }
 
-require(["sha", "util"], function (sha, util) {
+require(["web-sha", "web-util"], function (sha, util) {
 
   // See RFC 2202, Section 3
   test("HMAC-SHA1 (RFC-2202)", function (next) {

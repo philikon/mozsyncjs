@@ -1,4 +1,4 @@
-require(["aes", "util"], function (aes, util) {
+require(["web-aes", "web-util"], function (aes, util) {
 
   test("encrypt", function (next) {
     var result = aes.encrypt("These are exactly 32 characters!",

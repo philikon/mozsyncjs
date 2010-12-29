@@ -1,4 +1,4 @@
-require(["util"], function (util) {
+require(["web-util"], function (util) {
 
   test("Base64 (RFC-4648 Section 10)", function (next) {
     var base64_test_vectors = {
