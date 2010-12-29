@@ -23,11 +23,9 @@ crypto
     decode(string) -> string
 
 @sync
-PropStore
+settings
   get(string) -> object
   put(string, object)
-
-engines Engine array
 
 notify
   syncStarted(engines Engine array)

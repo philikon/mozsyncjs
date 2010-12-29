@@ -1,8 +1,11 @@
-obj Service
-  @sync
+@sync
+Service(platform Platform)
   setCredentials(account string, password string, syncKey string)
+  register(Store) -> Engine
+  unregister(Engine)
   startSync()
 
-Engine(name String, local Store)
+@private_ctor
+Engine
   startSync()
 
