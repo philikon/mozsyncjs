@@ -47,7 +47,10 @@ var serverResource = {
     }
 
     this.getHeader = function getHeader(header) {
-      return request.getHeader(header);
+      if (request.hasHeader(header)) {
+        return request.getHeader(header);
+      }
+      return null;
     };
 
     for (var header in this.responseHeaders) {
@@ -160,11 +163,40 @@ require(["resource-xhr"], function (resource) {
     });
   });
 
-  test("POST object", function (next) {
+  test("DELETE", function (next) {
     serverResource.data = "Mercedes 300 SL";
     var res = resource.Resource("http://localhost:8080/resource");
     res.del(function (error, result) {
       equals(serverResource.data, "");
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("request headers", function (next) {
+    serverResource.data = "Lamborghini Miura";
+    var res = resource.Resource("http://localhost:8080/resource");
+    res.setHeader("User-Agent", "Pure JavaScript Awesomeness");
+    res.setHeader("X-Power", "120 bhp");
+    //TODO user-agent header should be ignored acc to spec
+    res.get(function (error, result) {
+      equals(serverResource.getHeader("user-agent"),
+             "Pure JavaScript Awesomeness");
+      equals(serverResource.getHeader("x-power"), "120 bhp");
+      serverResource.clear();
+      next();
+    });
+  });
+
+  test("response headers", function (next) {
+    serverResource.data = "Volkswagen Beetle";
+    serverResource.responseHeaders = {"X-Power": "250 KW",
+                                      "Content-Type": "pure/awesomeness"};
+    var res = resource.Resource("http://localhost:8080/resource");
+    res.get(function (error, result) {
+      equals(serverResource.getHeader("content-type"), "pure/awesomeness");
+      equals(serverResource.getHeader("x-power"), "250 KW");
+      serverResource.clear();
       next();
     });
   });
