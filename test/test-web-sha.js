@@ -11,7 +11,6 @@ function test_hmac(testvectors, hmacfunc) {
   for (var i = 0; i < testvectors.length; i++) {
     var testcase = testvectors[i];
     print("test_case = " + testcase.test_case);
-    print(JSON.stringify(testcase));//DEBUG
     equals(testcase.key.length, testcase.key_len);
     equals(testcase.data.length, testcase.data_len);
     equals(hmacfunc(testcase.key, testcase.data), testcase.digest);
