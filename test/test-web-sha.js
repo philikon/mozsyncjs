@@ -7,17 +7,18 @@ function repeated (bytenum, times) {
   return r;
 }
 
-function test_hmac(testvectors, hmacfunc) {
-  for (var i = 0; i < testvectors.length; i++) {
-    var testcase = testvectors[i];
-    print("test_case = " + testcase.test_case);
-    equals(testcase.key.length, testcase.key_len);
-    equals(testcase.data.length, testcase.data_len);
-    equals(hmacfunc(testcase.key, testcase.data), testcase.digest);
-  }
-}
-
 require(["web-sha", "web-util"], function (sha, util) {
+
+  function test_hmac(testvectors, hmacfunc) {
+    for (var i = 0; i < testvectors.length; i++) {
+      var testcase = testvectors[i];
+      print("test_case = " + testcase.test_case);
+      equals(testcase.key.length, testcase.key_len);
+      equals(testcase.data.length, testcase.data_len);
+      equals(util.stringToHex(hmacfunc(testcase.key, testcase.data)),
+             testcase.digest);
+    }
+  }
 
   // See RFC 2202, Section 3
   test("HMAC-SHA1 (RFC-2202)", function (next) {
@@ -84,7 +85,7 @@ require(["web-sha", "web-util"], function (sha, util) {
 
     ];
 
-    test_hmac(rfc2202, sha.hmac1);
+    test_hmac(rfc2202, sha.hmac_sha1);
     next();
 
   });
@@ -155,7 +156,7 @@ require(["web-sha", "web-util"], function (sha, util) {
 
     ];
 
-    test_hmac(rfc4231, sha.hmac1);
+    test_hmac(rfc4231, sha.hmac_sha256);
     next();
   });
 
