@@ -8,14 +8,14 @@ Resource(uri)
 
 @sync
 crypto
+  generateRandomBytes(number int) -> string
   aes
-    encrypt(key, iv, cleartext) -> ciphertext
-    decrypt(key, iv, ciphertext) -> cleartext
-    generateRandomBytes(number int) -> string
+    encrypt(key string, iv string, cleartext string) -> ciphertext string
+    decrypt(key string, iv string, ciphertext string) -> cleartext string
   hash
-    sha1(string) -> string
-    sha256(string) -> string
-    hmac256(key, string) -> string
+    sha1(string) -> hash string
+    sha256(string) -> hash string
+    hmac_sha256(key string, message string) -> hash string
   base64
     encode(string) -> string
     decode(string) -> string
@@ -25,8 +25,9 @@ crypto
 
 @sync
 settings
-  get(string) -> object
-  put(string, object)
+  type builtin_object bool | int | string
+  get(key string) -> builtin_object
+  put(key string, value builtin_object)
 
 @sync
 notify
