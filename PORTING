@@ -1,12 +1,18 @@
 Each platform is expected to define a module with the following interface:
 
+@async
 Resource(uri)
-  get()
-  put(obj)
-  post(obj)
-  del()
+  get() -> callback(error, result)
+  put(obj) -> callback(error, result)
+  post(obj) -> callback(error, result)
+  del() -> callback(error, result)
 
-@sync
+result
+  status -> int
+  success -> bool
+  toString() -> string
+  getHeader(name string) -> value string
+
 crypto
   generateRandomBytes(number int) -> string
   aes
@@ -23,26 +29,25 @@ crypto
     encode(string) -> string
     decode(string) -> string
 
-@sync
 settings
   type builtin_object bool | int | string
   get(key string) -> builtin_object
   put(key string, value builtin_object)
 
-@sync
 notify
   syncStarted(engines Engine array)
   syncEnded(reason string)
   syncEngineStarted(engine Engine)
   syncEngineEnded(engine Engine, reason string)
 
-@sync
 timer
   setTimeout(function, int)
 
 Platforms should also provide implementations for the local Store for each engine.
 Store's interface is as follows:
 
-  fetchSince(time) -> rec array
-  storeRecords(rec array)
-  getRecords(string array) -> rec array
+@async
+Store
+  fetchSince(time) -> callback(error, rec array)
+  storeRecords(rec array) -> callback(error)
+  getRecords(string array) -> callback(error, rec array)
