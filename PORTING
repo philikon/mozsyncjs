@@ -34,14 +34,14 @@ settings
   get(key string) -> builtin_object
   put(key string, value builtin_object)
 
+timer
+  setTimeout(function, int)
+
 notify
   syncStarted(engines Engine array)
   syncEnded(reason string)
   syncEngineStarted(engine Engine)
   syncEngineEnded(engine Engine, reason string)
-
-timer
-  setTimeout(function, int)
 
 Platforms should also provide implementations for the local Store for each engine.
 Store's interface is as follows:
