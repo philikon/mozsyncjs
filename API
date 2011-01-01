@@ -4,6 +4,7 @@ Service(platform Platform)
   register(Store) -> Engine
   unregister(Engine)
   startSync()
+  reset(firstSync)
 
 @private_ctor
 Engine

@@ -11,6 +11,7 @@ crypto
   aes
     encrypt(key, iv, cleartext) -> ciphertext
     decrypt(key, iv, ciphertext) -> cleartext
+    generateRandomBytes(number int) -> string
   hash
     sha1(string) -> string
     sha256(string) -> string
@@ -27,11 +28,16 @@ settings
   get(string) -> object
   put(string, object)
 
+@sync
 notify
   syncStarted(engines Engine array)
   syncEnded(reason string)
   syncEngineStarted(engine Engine)
   syncEngineEnded(engine Engine, reason string)
+
+@sync
+timer
+  setTimeout(function, int)
 
 Platforms should also provide implementations for the local Store for each engine.
 Store's interface is as follows:
