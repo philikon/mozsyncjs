@@ -15,7 +15,7 @@ result
 
 crypto
   generateRandomBytes(number int) -> string
-  aes
+  aes256cbc
     encrypt(key string, iv string, cleartext string) -> ciphertext string
     decrypt(key string, iv string, ciphertext string) -> cleartext string
   hash
