@@ -1,0 +1,39 @@
+mozsyncjs -- Mozilla Sync client in JavaScript
+==============================================
+
+This aims to be a complete client implementation for Mozillla's Sync
+service.
+
+Why JavaScript?
+---------------
+
+There are many platforms that allow writing applications using
+JavaScript and to some extent, web technologies: Gecko, Chromium,
+webOS, PhoneGap, Titanium, Gecko, etc.
+
+Structure
+---------
+
+This project has two distinct parts:
+
+a) Generic JavaScript Sync service and engine implementations that can
+   be used across platforms.  They implement the Sync API and encapsulate
+   the syncing logic.
+
+b) Integration code for various platforms.  This abstracts things like
+   HTTP requests, persisting data, crypto, etc. into an API common
+   across all platforms.
+
+Goals
+-----
+
+* async APIs wherever possible (incl. module loading)
+
+* use JavaScript the "good parts", EcmaScript 5 idioms wherever feasible
+
+* 100% test coverage
+
+* fully functional on the "web" platform (assumes nothing but a modern
+  web browser)
+
+* potential other platforms: chromium, gecko, webos, phonegap, etc.
