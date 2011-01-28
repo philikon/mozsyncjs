@@ -9,7 +9,8 @@ Why JavaScript?
 
 There are many platforms that allow writing applications using
 JavaScript and to some extent, web technologies: Gecko, Chromium,
-webOS, PhoneGap, Titanium, Gecko, etc.
+webOS, PhoneGap, Titanium, Gecko, etc. JavaScript has, to some extent,
+become the Write Once, Run Everywhere language.
 
 Structure
 ---------
@@ -37,3 +38,36 @@ Goals
   web browser)
 
 * potential other platforms: chromium, gecko, webos, phonegap, etc.
+
+Platform Integration
+--------------------
+
+A platform has to provide the following building block APIs necessary
+for Sync:
+
+Resource
+  for making HTTP requests to REST resources. If XMLHttpRequest is
+  available, the "web" platform's implementation can be used.
+
+Crypto
+  consisting of a random bytes generator, AES 256 CBC crypto, SHA1 and
+  SHA256 hashing, as well as base32 and base64 encoding and decoding.
+  The "web" platform provides pure JavaScript implementation of these,
+  but many platforms have faster native implementations.
+
+Settings
+  for storing small amounts of data locally, e.g. last sync time.  If
+  localStorage is eavailable, the "web" platofrm's implementation can
+  be used.
+
+Timer
+  for launching functions asynchronously.
+
+Building Clients
+----------------
+
+Notify
+  TODO
+
+Store (for each engine)
+  TODO
