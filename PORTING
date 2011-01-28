@@ -3,6 +3,7 @@ Each platform is expected to define a module with the following interface:
 @async
 Resource(uri)
   get() -> callback(error, result)
+  stream() -> callback(error, result)
   put(obj) -> callback(error, result)
   post(obj) -> callback(error, result)
   del() -> callback(error, result)
