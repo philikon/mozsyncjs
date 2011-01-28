@@ -1,0 +1,22 @@
+Test plan
+=========
+
+* low level unit tests:
+  - hkdf
+  - account to username
+  - etc.
+
+* platform compliance unit tests (no server)
+  - sha
+  - aes
+  - base32, base64
+  - settings storage
+
+* tests that involve server calls
+  - resource
+  - remote storage
+
+* sync behaviour tests (require Sync server)
+  - engine sync (syncStartup, processIncoming, uploadOutgoing, etc.)
+  - service behaviour (meta/global, etc.)
+  - end-to-end syncing
